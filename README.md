@@ -4,7 +4,7 @@
 
 Smartphone FMCW acoustic gesture experiments with retained PCM/WAV captures and MATLAB processing scripts.
 
-> **Development history:** Developed locally before publication. These repositories were uploaded together, so their GitHub publication dates do not indicate when development began.
+> **Development history:** Developed locally using Git before publication. These projects were published to GitHub together, so similar upload dates do not indicate when development began.
 
 ## Quick start
 
