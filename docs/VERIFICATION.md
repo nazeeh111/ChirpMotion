@@ -20,6 +20,10 @@ The test uses only local synthetic inputs or bundled data. It does not acquire o
 
 ## Limits
 
-Gesture recognition accuracy and the FMCW processing pipelines are unverified because Signal Processing Toolbox is not installed. No microphone, speaker output, or TCP session was started.
+Gesture recognition accuracy and the historical toolbox-dependent scripts remain unverified. The separate base-MATLAB offline analysis now runs without that toolbox. No microphone, speaker output, or TCP session was started.
 
 The facade restores the MATLAB search path after a call. Legacy figure output and computational behavior are preserved. This release has new branding, documentation, artwork, and an entry-point facade; it does not claim a new underlying research algorithm.
+
+## Offline extension, 2026-09-23
+
+`tests/offline_test.m` passed in MATLAB R2026a using base MATLAB: a 300 Hz analytic beat was recovered within 1.171875 Hz in both sweep directions; known synchronization and repeated-frame invariance passed; all nine bundled filenames produced finite, nonzero spectra. Header inspection found `gesture.pcm` is stereo WAV, handled with explicit channel 2. Historical source and assets remain unchanged. See [signal model, assumptions and evidence](OFFLINE-ANALYSIS.md). Bundled-capture processing does not establish gesture or position accuracy.
