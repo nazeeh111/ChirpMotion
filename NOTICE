@@ -1,0 +1,20 @@
+ChirpMotion source and license scope
+
+Retained research scripts and recordings originate from:
+https://github.com/lauren2018/fmcw-acoustic-gesture-recognition
+Authors: Meng Zhou, Wentao Xie and Xiaotong Zhang
+Advanced Computer Science Experiment 2018, CSE, Southern University of Science and Technology.
+
+Original author headers and retained numerical/capture files remain intact.
+The source attribution is supported by the matching author names and distinctive
+filenames. No fresh byte comparison against the current upstream repository is
+claimed. The examined upstream root and README did not establish a license grant
+for its research source or recordings. This repository's MIT license does not
+establish or change those inherited permissions.
+
+The C17 implementation, native tests and generated signals in native/ are
+original first-party additions, licensed under native/LICENSE. They implement
+the declared mathematical model without copying retained research scripts or
+bundling inherited recordings. Earlier offline MATLAB wrappers, checks and
+presentation are separate first-party additions. No new sensing algorithm,
+gesture accuracy or calibrated physical range is claimed.

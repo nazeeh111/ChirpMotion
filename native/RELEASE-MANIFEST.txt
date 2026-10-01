@@ -1,0 +1,14 @@
+.gitignore
+LICENSE
+Makefile
+README.md
+RELEASE-MANIFEST.txt
+include/chirpmotion.h
+src/analyze.c
+src/audio.c
+src/common.c
+src/dsp.c
+src/main.c
+tests/cli.sh
+tests/demo.sh
+tests/test_native.c

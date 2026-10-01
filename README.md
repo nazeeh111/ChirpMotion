@@ -2,9 +2,28 @@
 
 # ChirpMotion
 
-Smartphone FMCW acoustic gesture experiments with retained PCM/WAV captures and MATLAB processing scripts.
+Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
-> **Development history:** Developed locally using Git before publication. These projects were published to GitHub together, so similar upload dates do not indicate when development began.
+The retained research scripts and recordings originate from [FMCW Acoustic Gesture Recognition](https://github.com/lauren2018/fmcw-acoustic-gesture-recognition) by **Meng Zhou, Wentao Xie and Xiaotong Zhang**, a 2018 SUSTech experiment. The native analyzer, generated demo and earlier offline MATLAB extension are separate additions. [Source and license scope](NOTICE).
+
+## Native analysis, no MATLAB required
+
+On macOS or Linux with a C compiler and make:
+
+```sh
+git clone https://github.com/nazeeh111/ChirpMotion.git
+cd ChirpMotion
+make -C native check demo
+```
+
+The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. It prints the new output directory containing `cycles.csv`, optional `spectra.csv` and `summary.json`.
+
+```sh
+native/build/chirpmotion-native --input recording.wav --channel 2 \
+  --mode alternating --output new-analysis
+```
+
+The supported native inputs are mono raw little-endian int16 PCM or classic PCM16 WAVE at 48 kHz. Stereo requires an explicit channel. These measurements describe spectra and relative acoustic paths; they do not classify gestures or establish calibrated object distances. See [native usage, formats and limits](native/README.md). Existing destinations are refused.
 
 ## Quick start
 
@@ -46,4 +65,4 @@ Run `run('tests/smoke_test.m'); run('tests/offline_test.m')` from the repository
 
 ## License
 
-MIT covers the authorized first-party code and new presentation. Separately owned in-file notices remain applicable.
+The original native implementation and generated fixtures are covered by [native/LICENSE](native/LICENSE). The repository MIT license applies to the separate first-party additions and presentation. It does not relicense the retained research code or recordings; [NOTICE](NOTICE) identifies their source and the limits of the recorded license evidence.
