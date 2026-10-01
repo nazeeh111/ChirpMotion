@@ -1,5 +1,3 @@
-![ChirpMotion](docs/banner.svg)
-
 # ChirpMotion
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
@@ -25,15 +23,15 @@ native/build/chirpmotion-native --input recording.wav --channel 2 \
 
 The supported native inputs are mono raw little-endian int16 PCM or classic PCM16 WAVE at 48 kHz. Stereo requires an explicit channel. These measurements describe spectra and relative acoustic paths; they do not classify gestures or establish calibrated object distances. See [native usage, formats and limits](native/README.md). Existing destinations are refused.
 
-## Quick start
+## Read PCM with MATLAB
 
-Open MATLAB in this repository, then use the branded entry point:
+To read raw PCM samples into MATLAB, run:
 
 ```matlab
 samples = chirp_motion('recording.pcm');
 ```
 
-The entry point preserves the existing function's arguments, errors, and numerical output. Existing script and function names remain available for compatibility. No sensor starts when you open this repository.
+`chirp_motion` forwards to the original `pcmread` function. It reads samples; use the native program above or `chirp_motion_analyze` below for spectral analysis.
 
 ## Offline FMCW analysis (base MATLAB)
 
