@@ -14,7 +14,15 @@ cd ChirpMotion
 make -C native check demo
 ```
 
-The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. It prints the new output directory containing `cycles.csv`, optional `spectra.csv` and `summary.json`.
+The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. No microphone, MATLAB or downloaded recording is needed.
+
+![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-spectrum.svg)
+
+*First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [All six cycles](docs/results/native-demo-cycles.csv) · [Run settings](docs/results/native-demo-summary.json).*
+
+The command prints a fresh `native/build/demo.<suffix>/` directory. Open `delay/summary.json` for settings and sample counts, `delay/cycles.csv` for per-sweep measurements, or `delay/spectra.csv` for the full spectra. The separate `align/summary.json` should report `start_sample: 138` and `discarded_suffix_samples: 19`.
+
+## Analyze your recording
 
 ```sh
 native/build/chirpmotion-native --input recording.wav --channel 2 \
@@ -22,6 +30,8 @@ native/build/chirpmotion-native --input recording.wav --channel 2 \
 ```
 
 The supported native inputs are mono raw little-endian int16 PCM or classic PCM16 WAVE at 48 kHz. Stereo requires an explicit channel. These measurements describe spectra and relative acoustic paths; they do not classify gestures or establish calibrated object distances. See [native usage, formats and limits](native/README.md). Existing destinations are refused.
+
+If analysis fails, read the terminal error and choose a new output directory before retrying. Failed output is marked `INCOMPLETE.txt`; a completed run has `summary.json`. Preserve incomplete output if you need to inspect the failure. For raw PCM, verify its format and sample rate first: a headerless file cannot identify its own encoding.
 
 ## Read PCM with MATLAB
 
