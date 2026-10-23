@@ -16,7 +16,7 @@ make -C native check demo
 
 The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. No microphone, MATLAB or downloaded recording is needed.
 
-![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-spectrum.svg)
+![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-result.svg)
 
 *First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [All six cycles](docs/results/native-demo-cycles.csv) · [Run settings](docs/results/native-demo-summary.json).*
 
