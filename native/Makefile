@@ -14,7 +14,6 @@ $(BUILD)/chirpmotion-native: src/main.c $(CORE) include/chirpmotion.h | $(BUILD)
 $(BUILD)/test-native: tests/test_native.c $(CORE) include/chirpmotion.h | $(BUILD)
 	$(CC) $(CPPFLAGS) $(CFLAGS) tests/test_native.c $(CORE) $(LDFLAGS) $(LDLIBS) -o $@
 check: all $(BUILD)/test-native
-	mkdir -p build
 	./$(BUILD)/test-native
 	sh tests/cli.sh ./$(BUILD)/chirpmotion-native
 

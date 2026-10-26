@@ -2,7 +2,7 @@
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
-The retained research scripts and recordings originate from [FMCW Acoustic Gesture Recognition](https://github.com/lauren2018/fmcw-acoustic-gesture-recognition) by **Meng Zhou, Wentao Xie and Xiaotong Zhang**, a 2018 SUSTech experiment. The native analyzer, generated demo and earlier offline MATLAB extension are separate additions. [Source and license scope](NOTICE).
+The native analyzer and offline MATLAB extension accompany retained research scripts and recordings. [NOTICE](NOTICE) documents their origins and separate license scopes.
 
 ## Native analysis, no MATLAB required
 

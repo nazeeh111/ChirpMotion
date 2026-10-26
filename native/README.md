@@ -53,6 +53,6 @@ make CC=clang check
 make sanitize
 ```
 
-The CI workflow runs GCC and Clang on Ubuntu, with sanitizer and fixed-buffer acceptance. Hosted results must be inspected at the released commit; committing a workflow does not establish its success. The historical MATLAB workflows remain separate and unchanged.
+CI runs GCC and Clang on Ubuntu, including sanitizer and fixed-buffer checks. The MATLAB workflows are verified separately.
 
-[Original research](https://github.com/lauren2018/fmcw-acoustic-gesture-recognition) is credited to Meng Zhou, Wentao Xie and Xiaotong Zhang. This native implementation, its tests and generated signals are original additions under [MIT](LICENSE). A native-only package contains the files listed in [RELEASE-MANIFEST.txt](RELEASE-MANIFEST.txt), excluding inherited scripts, recordings and built binaries.
+The native implementation, tests and generated signals are covered by [MIT](LICENSE). A native-only package contains the files listed in [RELEASE-MANIFEST.txt](RELEASE-MANIFEST.txt), excluding inherited scripts, recordings and built binaries.
