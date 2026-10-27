@@ -2,7 +2,7 @@
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
-The native analyzer and offline MATLAB extension accompany retained research scripts and recordings. [NOTICE](NOTICE) documents their origins and separate license scopes.
+The native analyzer and offline MATLAB extension support retained research scripts and recordings. [NOTICE](NOTICE) describes the license scope.
 
 ## Native analysis, no MATLAB required
 
@@ -69,8 +69,8 @@ PCM input is signed 16-bit data, returned as a column of doubles without normali
 
 ## Verification
 
-Run `run('tests/smoke_test.m'); run('tests/offline_test.m')` from the repository root. See [verification details](docs/VERIFICATION.md) for the tested scope and unavailable checks. Historical computational source and bundled assets remain byte-identical. The new offline analyzer is a separate supported path.
+Run `run('tests/smoke_test.m'); run('tests/offline_test.m')` from the repository root. See [verification details](docs/VERIFICATION.md) for the tested scope and unavailable checks. The numerical implementation and bundled assets are preserved; author headers were updated under permission. The new offline analyzer is a separate supported path.
 
 ## License
 
-The original native implementation and generated fixtures are covered by [native/LICENSE](native/LICENSE). The repository MIT license applies to the separate first-party additions and presentation. It does not relicense the retained research code or recordings; [NOTICE](NOTICE) identifies their source and the limits of the recorded license evidence.
+The original native implementation and generated fixtures are covered by [native/LICENSE](native/LICENSE). The repository MIT license applies to the separate first-party additions and presentation. Adapted research code is used with permission to use and rebrand without author credit. These MIT terms do not relicense retained recordings; see [NOTICE](NOTICE).

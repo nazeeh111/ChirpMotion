@@ -1,4 +1,4 @@
-% Author: Wentao Xie, Meng Zhou and Xiaotong Zhang
+% ChirpMotion FMCW processing experiment.
 N = 8192*2;
 res = (1*Fs) / N;
 

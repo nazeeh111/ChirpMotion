@@ -1,4 +1,4 @@
-% Author: Wentao Xie, Meng Zhou and Xiaotong Zhang
+% ChirpMotion FMCW processing experiment.
 clear;
 % close all;
 
