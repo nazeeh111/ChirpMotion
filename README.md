@@ -2,7 +2,7 @@
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
-The native analyzer and offline MATLAB extension support retained research scripts and recordings. [NOTICE](NOTICE) describes the license scope.
+The native analyzer and offline MATLAB extension support retained research scripts and recordings.
 
 ## Native analysis, no MATLAB required
 
@@ -73,4 +73,4 @@ Run `run('tests/smoke_test.m'); run('tests/offline_test.m')` from the repository
 
 ## License
 
-The original native implementation and generated fixtures are covered by [native/LICENSE](native/LICENSE). The repository MIT license applies to the separate first-party additions and presentation. Adapted research code is used with permission to use and rebrand without author credit. These MIT terms do not relicense retained recordings; see [NOTICE](NOTICE).
+The original native implementation and generated fixtures are covered by [native/LICENSE](native/LICENSE). The repository MIT license applies to the separate first-party additions and presentation. Adapted research code is used with permission to use and rebrand without author credit. These MIT terms do not relicense retained recordings.
