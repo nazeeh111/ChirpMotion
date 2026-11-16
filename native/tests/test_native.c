@@ -138,7 +138,7 @@ static void test_analysis(void) {
         require(cycle==row/2 && c==row%2 && fabs(time-expected)<1e-12,"sweep timing and indices");
         require(fabs(peak-300)<=48000.0/16384,"analytic 300 Hz beat in both directions");
         require(fabs(delay-peak/300000)<1e-15 && fabs(path-delay*340)<1e-12,"relative acoustic path convention");
-        if (row>=2) require(strstr(line,",0\n")!=NULL,"identical cycles have zero change");
+        if (row>=2) require(strstr(line,",0,")!=NULL,"identical cycles have zero change");
         ++row;
     }
     require(row==12 && fclose(file)==0,"all generated sweeps output");
@@ -192,7 +192,7 @@ static void test_refusals(void) {
     require(cm_analyze(name,out,&options,&report,&error)==0,"known-start silence analyzed");
     FILE *rows=fopen("build/test-refusal/cycles.csv","rb"); require(rows!=NULL,"silent rows");
     char line[256]; require(fgets(line,sizeof line,rows)!=NULL,"silent header");
-    require(fgets(line,sizeof line,rows)!=NULL && strstr(line,",null,null,null,null\n")!=NULL,"undefined silence measurements explicit");
+    require(fgets(line,sizeof line,rows)!=NULL && strstr(line,",null,null,null,null,no_signal,")!=NULL,"undefined silence measurements explicit");
     require(fclose(rows)==0,"close silent rows"); remove_output(out,0);
     /* Short deterministic parser corpus runs under sanitizers as well. */
     uint32_t state=UINT32_C(0x29c717);

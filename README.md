@@ -2,25 +2,34 @@
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
-The native analyzer and offline MATLAB extension support retained research scripts and recordings.
-
 ## Native analysis, no MATLAB required
 
-On macOS or Linux with a C compiler and make:
+On macOS or Linux with a C compiler and make. Current native source identifies as `0.1.1-dev.0`; retained recordings, plots and earlier source packages keep their original provenance.
 
 ```sh
 git clone https://github.com/nazeeh111/ChirpMotion.git
 cd ChirpMotion
 make -C native check demo
+native/build/chirpmotion-native --version
 ```
 
 The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. No microphone, MATLAB or downloaded recording is needed.
 
 ![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-result.svg)
 
-*First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [All six cycles](docs/results/native-demo-cycles.csv) · [Run settings](docs/results/native-demo-summary.json).*
+*First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [Historical cycle output](docs/results/native-demo-cycles.csv) · [Historical settings](docs/results/native-demo-summary.json).*
 
-The command prints a fresh `native/build/demo.<suffix>/` directory. Open `delay/summary.json` for settings and sample counts, `delay/cycles.csv` for per-sweep measurements, or `delay/spectra.csv` for the full spectra. The separate `align/summary.json` should report `start_sample: 138` and `discarded_suffix_samples: 19`.
+The command prints a fresh `native/build/demo.<suffix>/` directory. Open `delay/summary.json` for settings and sample counts, `delay/cycles.csv` for per-sweep measurements, or `delay/spectra.csv` for the full spectra. Each row reports a peak in Hz, delay in seconds and relative acoustic path in metres under the stated sweep model. That path is not a calibrated distance to an object. The separate `align/summary.json` should report `start_sample: 138` and `discarded_suffix_samples: 19`.
+
+Read the per-sweep `quality` before interpreting a path. The [current generated cycles](docs/results/native-screening-demo-cycles.csv) and [screening settings](docs/results/native-screening-demo-summary.json) preserve that evidence alongside the historical output above:
+
+| Quality | What the row reports |
+| --- | --- |
+| `usable` | A peak passes the declared heuristic; a modeled relative delay and path are emitted. |
+| `ambiguous` | A band-edge, competing-peak or background check failed; raw spectral evidence remains, but delay and path are `null`. |
+| `no_signal` | The spectrum is exactly zero; peak, delay and path are `null`. |
+
+This is uncalibrated screening, not a confidence score or physical-path validation. A completed analysis exits **0** even when every sweep is screened out. Input, analysis or output failures exit **1**; invalid command-line syntax exits **2**. Python 3 is needed only for the additional generated-signal screening tests: `python3 native/tests/test_quality.py native/build/chirpmotion-native`.
 
 ## Analyze your recording
 
@@ -29,7 +38,7 @@ native/build/chirpmotion-native --input recording.wav --channel 2 \
   --mode alternating --output new-analysis
 ```
 
-The supported native inputs are mono raw little-endian int16 PCM or classic PCM16 WAVE at 48 kHz. Stereo requires an explicit channel. These measurements describe spectra and relative acoustic paths; they do not classify gestures or establish calibrated object distances. See [native usage, formats and limits](native/README.md). Existing destinations are refused.
+The supported native inputs are mono raw little-endian int16 PCM or classic PCM16 WAVE at 48 kHz. Stereo requires an explicit channel. Input and output paths are relative to the working directory; the output parent must already exist. These measurements describe spectra and relative acoustic paths; they do not classify gestures or establish calibrated object distances. See [native usage, formats and limits](native/README.md). Existing destinations are refused.
 
 If analysis fails, read the terminal error and choose a new output directory before retrying. Failed output is marked `INCOMPLETE.txt`; a completed run has `summary.json`. Preserve incomplete output if you need to inspect the failure. For raw PCM, verify its format and sample rate first: a headerless file cannot identify its own encoding.
 

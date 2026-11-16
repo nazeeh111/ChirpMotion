@@ -9,7 +9,7 @@ CORE = src/common.c src/audio.c src/dsp.c src/analyze.c
 all: $(BUILD)/chirpmotion-native
 $(BUILD):
 	mkdir -p $(BUILD)
-$(BUILD)/chirpmotion-native: src/main.c $(CORE) include/chirpmotion.h | $(BUILD)
+$(BUILD)/chirpmotion-native: src/main.c $(CORE) include/chirpmotion.h include/version.h | $(BUILD)
 	$(CC) $(CPPFLAGS) $(CFLAGS) src/main.c $(CORE) $(LDFLAGS) $(LDLIBS) -o $@
 $(BUILD)/test-native: tests/test_native.c $(CORE) include/chirpmotion.h | $(BUILD)
 	$(CC) $(CPPFLAGS) $(CFLAGS) tests/test_native.c $(CORE) $(LDFLAGS) $(LDLIBS) -o $@

@@ -5,10 +5,14 @@ binary=$1
 case_dir=$(mktemp -d "build/cli-check.XXXXXX")
 trap 'rm -rf "$case_dir"' EXIT HUP INT TERM
 "$binary" --help > "$case_dir/help.txt"
+"$binary" --version > "$case_dir/version.txt"
+grep -Fx 'chirpmotion-native 0.1.1-dev.0' "$case_dir/version.txt" > /dev/null
 "${binary%/*}/test-native" --demo "$case_dir"
 input="$case_dir/align.wav"
 "$binary" --input "$input" --channel 2 --output "$case_dir/valid-output" > "$case_dir/out" 2> "$case_dir/error"
 test -f "$case_dir/valid-output/summary.json"
+grep -F "$case_dir/valid-output/summary.json" "$case_dir/out" > /dev/null
+grep -F "$case_dir/valid-output/cycles.csv" "$case_dir/out" > /dev/null
 expect_refusal() {
     name=$1
     expected_status=$2
@@ -33,4 +37,5 @@ for option in '--channel 0' '--channel 3' '--start-sample -1' '--start-sample 0'
     esac
 done
 expect_refusal repeated 2 --input "$input" --channel 2
+expect_refusal version-combined 2 --channel 2 --version
 echo 'PASS actual CLI help, invalid/repeated options and no-output checks'

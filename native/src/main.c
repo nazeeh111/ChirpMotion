@@ -1,11 +1,13 @@
 /* Original ChirpMotion native CLI, MIT. */
 #include "chirpmotion.h"
+#include "version.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
 static void usage(FILE *file) {
     fputs("Usage: chirpmotion-native --input FILE --output NEW_DIRECTORY [options]\n"
+          "       chirpmotion-native --help | --version\n\n"
           "  --mode up|alternating     successive 961-sample sweeps (default up)\n"
           "  --channel 1|2            required for stereo PCM16 WAVE\n"
           "  --start-sample N         one-based known start; otherwise global alignment\n"
@@ -13,7 +15,16 @@ static void usage(FILE *file) {
           "  --spectra-csv            also stream full 0..1500 Hz spectra\n"
           "  --max-output-bytes N     total CSV/JSON cap, 1..536870912\n"
           "Input: seekable mono PCM16LE or classic PCM16 WAVE, 48000 Hz, <=1 GiB.\n"
-          "Results describe spectra and relative acoustic paths, not calibrated object distances.\n",file);
+          "Paths are relative to the working directory. The output parent must exist;\n"
+          "the output directory must be new. No recording device is opened.\n\n"
+          "Read summary.json for settings and cycles.csv for each sweep's quality.\n"
+          "Quality is an uncalibrated screen: usable, ambiguous, or no_signal.\n"
+          "Ambiguous/no_signal rows have null delay and path; available peaks remain.\n"
+          "Units: peak Hz, delay seconds, relative acoustic path metres.\n"
+          "These paths are not calibrated object distances or gesture labels.\n\n"
+          "Exit 0: complete files, including screened-out sweeps.\n"
+          "Exit 1: input, analysis or output failure; inspect the error and any INCOMPLETE.txt.\n"
+          "Exit 2: missing, repeated or invalid command-line option.\n",file);
 }
 static int integer(const char *text,uint64_t *value) {
     if (!text || !*text) return -1;
@@ -28,6 +39,10 @@ int main(int argc,char **argv) {
     for (int i=1;i<argc;++i) {
         const char *flag=argv[i]; unsigned bit=0;
         if (strcmp(flag,"--help")==0) { if (argc!=2) goto invalid; usage(stdout); return 0; }
+        if (strcmp(flag,"--version")==0) {
+            if (argc!=2) goto invalid;
+            return printf("chirpmotion-native %s\n",CM_VERSION)<0 || fflush(stdout)!=0 ? 1 : 0;
+        }
         if (strcmp(flag,"--input")==0) bit=1;
         else if (strcmp(flag,"--output")==0) bit=2;
         else if (strcmp(flag,"--mode")==0) bit=4;
@@ -64,6 +79,9 @@ int main(int argc,char **argv) {
     if (printf("Analyzed %llu cycles; start sample %llu; processing heap peak %zu bytes.\n",
                (unsigned long long)report.cycles,(unsigned long long)report.start_sample,
                report.peak_heap_bytes)<0 || fflush(stdout)!=0) return 1;
+    if (printf("Summary: %s/summary.json\nMeasurements: %s/cycles.csv\n",output,output)<0) return 1;
+    if (options.spectra && printf("Spectra: %s/spectra.csv\n",output)<0) return 1;
+    if (fputs("Read per-sweep quality before using a path; ambiguous/no_signal paths are null.\n",stdout)==EOF || fflush(stdout)!=0) return 1;
     return 0;
 invalid:
     fputs("error: missing, repeated or invalid option\n",stderr); usage(stderr); return 2;

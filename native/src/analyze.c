@@ -97,6 +97,51 @@ done:
     cm_free(samples); cm_free(ring); cm_free(history); cm_free(kernel); cm_free(block);
     return result;
 }
+typedef struct {
+    const char *status;
+    double competing, noise_rms, peak_to_noise, resolved_peak, resolved_valley;
+} CMQuality;
+/* Heuristic screening, not a calibrated detection probability or physical accuracy. */
+static CMQuality spectrum_quality(const double *spectrum,size_t bins,size_t peak,
+                                  double amplitude,size_t fft_length) {
+    CMQuality quality={"no_signal",0,0,NAN,0,NAN};
+    if (amplitude==0) return quality;
+    size_t guard=(150U*fft_length+CM_RATE-1)/CM_RATE, count=0;
+    double sum=0;
+    for (size_t k=0;k<bins;++k) {
+        size_t distance=k>peak ? k-peak : peak-k;
+        if (distance<=guard) continue;
+        double normalized=spectrum[k]/amplitude;
+        sum+=normalized*normalized; ++count;
+        if (spectrum[k]>quality.competing) quality.competing=spectrum[k];
+    }
+    double noise_relative=count ? sqrt(sum/count) : 0;
+    quality.noise_rms=noise_relative*amplitude;
+    if (noise_relative>0) quality.peak_to_noise=1/noise_relative;
+    /* Scan both sides from the dominant peak; a shoulder has no intervening valley. */
+    for (int direction=-1;direction<=1;direction+=2) {
+        size_t k=peak;
+        double valley=amplitude;
+        while ((direction<0 && k>0) || (direction>0 && k+1<bins)) {
+            k=direction<0 ? k-1 : k+1;
+            double value=spectrum[k];
+            if (value<valley) valley=value;
+            int local_max = k==0 ? value>=spectrum[1] :
+                k==bins-1 ? value>=spectrum[bins-2] :
+                value>=spectrum[k-1] && value>=spectrum[k+1] &&
+                (value>spectrum[k-1] || value>spectrum[k+1]);
+            if (local_max && value>=0.65*amplitude && valley<=0.5*value &&
+                value>quality.resolved_peak) {
+                quality.resolved_peak=value;
+                quality.resolved_valley=valley;
+            }
+        }
+    }
+    double hz=(double)peak*CM_RATE/fft_length;
+    quality.status=(hz<=150 || hz>=1350 || !count || quality.resolved_peak>0 ||
+        quality.competing>=0.65*amplitude || noise_relative>0.25) ? "ambiguous" : "usable";
+    return quality;
+}
 static int path_for(char path[1024],const char *directory,const char *name,CMError *error) {
     int size=snprintf(path,1024,"%s/%s",directory,name);
     if (size<0 || size>=1024) { cm_error(error,"output path is too long"); return -1; }
@@ -165,7 +210,7 @@ int cm_analyze(const char *input,const char *output,const CMOptions *options,
         if (!spectra.file) { cm_error(error,"cannot create spectrum output"); goto done; }
         if (row(&spectra,error,"cycle,sweep,frequency_hz,magnitude\n")!=0) goto done;
     }
-    if (row(&cycles,error,"cycle,sweep,start_seconds,peak_hz,relative_delay_seconds,relative_path_meters,relative_spectral_change\n")!=0) goto done;
+    if (row(&cycles,error,"cycle,sweep,start_seconds,peak_hz,relative_delay_seconds,relative_path_meters,relative_spectral_change,quality,peak_magnitude,competing_magnitude,noise_rms_magnitude,peak_to_noise_rms,resolved_competing_magnitude,resolved_valley_magnitude\n")!=0) goto done;
     for (uint64_t cycle=0;cycle<report->cycles;++cycle) for (size_t c=0;c<channels;++c) {
         memset(transform,0,options->fft_length*sizeof *transform);
         for (size_t j=0;j<CM_SWEEP;++j) {
@@ -187,11 +232,15 @@ int cm_analyze(const char *input,const char *output,const CMOptions *options,
         }
         double change=cycle && norm>0 ? sqrt(delta/norm) : NAN;
         double peak_hz=amplitude>0 ? (double)peak*CM_RATE/options->fft_length : NAN;
-        double delay=peak_hz/300000, path=delay*340;
+        CMQuality quality=spectrum_quality(spectrum,bins,peak,amplitude,options->fft_length);
+        double delay=strcmp(quality.status,"usable")==0 ? peak_hz/300000 : NAN;
+        double path=delay*340;
         double time=(double)(report->prefix_samples+cycle*period+c*CM_SWEEP)/CM_RATE;
-        char a[32],b[32],d[32],e[32];
-        if (row(&cycles,error,"%llu,%zu,%.17g,%s,%s,%s,%s\n",(unsigned long long)cycle,c,time,
-                number(peak_hz,a),number(delay,b),number(path,d),number(change,e))!=0) goto done;
+        char a[32],b[32],d[32],e[32],f[32],g[32],h[32],i[32],j[32],l[32];
+        if (row(&cycles,error,"%llu,%zu,%.17g,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",(unsigned long long)cycle,c,time,
+                number(peak_hz,a),number(delay,b),number(path,d),number(change,e),quality.status,
+                number(amplitude,f),number(quality.competing,g),number(quality.noise_rms,h),number(quality.peak_to_noise,i),
+                number(quality.resolved_peak,j),number(quality.resolved_valley,l))!=0) goto done;
         memcpy(previous+c*bins,spectrum,bins*sizeof *spectrum);
     }
     report->peak_heap_bytes=heap.peak;
@@ -209,7 +258,10 @@ int cm_analyze(const char *input,const char *output,const CMOptions *options,
         "  \"alignment_absolute_tolerance\": 1e-12,\n  \"cycles\": %llu,\n"
         "  \"discarded_prefix_samples\": %llu,\n  \"discarded_suffix_samples\": %llu,\n"
         "  \"fft_length\": %zu,\n  \"bin_spacing_hz\": %.17g,\n"
-        "  \"max_beat_hz\": 1500,\n  \"sweep_slope_hz_per_second\": 300000,\n"
+        "  \"max_beat_hz\": 1500,\n  \"quality_policy\": \"heuristic-v2\",\n"
+        "  \"quality_neighborhood_hz\": 150,\n  \"quality_competing_peak_ratio\": 0.65,\n"
+        "  \"quality_min_peak_to_rms\": 4,\n  \"quality_resolved_peak_ratio\": 0.65,\n"
+        "  \"quality_resolved_valley_ratio\": 0.5,\n  \"sweep_slope_hz_per_second\": 300000,\n"
         "  \"sound_speed_meters_per_second\": 340,\n  \"full_spectra\": %s,\n"
         "  \"max_output_bytes\": %llu,\n"
         "  \"peak_processing_heap_bytes\": %zu,\n"
