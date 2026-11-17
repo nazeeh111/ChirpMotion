@@ -34,6 +34,9 @@ typedef struct {
     size_t peak_heap_bytes;
 } CMReport;
 
+/* Optional completion metadata. CMReport and cm_analyze keep their original ABI. */
+typedef struct { uint64_t usable, ambiguous, no_signal; } CMOutcomeCounts;
+
 void cm_error(CMError *error, const char *format, ...);
 void *cm_alloc(CMHeap *heap, size_t count, size_t size, CMError *error);
 void cm_free(void *pointer);
@@ -46,4 +49,7 @@ int cm_audio_close(CMAudio *audio, CMError *error);
 CMOptions cm_default_options(void);
 int cm_analyze(const char *input, const char *output, const CMOptions *options,
                CMReport *report, CMError *error);
+/* Counts describe successfully written sweep rows; use only after return 0. */
+int cm_analyze_with_outcomes(const char *input, const char *output, const CMOptions *options,
+                            CMReport *report, CMOutcomeCounts *outcomes, CMError *error);
 #endif

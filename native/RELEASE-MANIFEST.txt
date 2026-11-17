@@ -13,4 +13,5 @@ src/main.c
 tests/cli.sh
 tests/demo.sh
 tests/test_native.c
+tests/test_outcomes.py
 tests/test_quality.py

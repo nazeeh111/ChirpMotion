@@ -153,8 +153,9 @@ static int close_writer(Writer *writer,CMError *error) {
     if (fclose(file)!=0) { cm_error(error,"failed flushing or closing output"); return -1; }
     return 0;
 }
-int cm_analyze(const char *input,const char *output,const CMOptions *options,
-               CMReport *report,CMError *error) {
+int cm_analyze_with_outcomes(const char *input,const char *output,const CMOptions *options,
+                            CMReport *report,CMOutcomeCounts *outcomes,CMError *error) {
+    if (outcomes) memset(outcomes,0,sizeof *outcomes);
     if (!input || !output || !options || !report || !*output || strlen(output)>900 ||
         options->fft_length<1024 || options->fft_length>65536 ||
         (options->fft_length&(options->fft_length-1)) || options->channel>2 ||
@@ -241,6 +242,11 @@ int cm_analyze(const char *input,const char *output,const CMOptions *options,
                 number(peak_hz,a),number(delay,b),number(path,d),number(change,e),quality.status,
                 number(amplitude,f),number(quality.competing,g),number(quality.noise_rms,h),number(quality.peak_to_noise,i),
                 number(quality.resolved_peak,j),number(quality.resolved_valley,l))!=0) goto done;
+        if (outcomes) {
+            if (strcmp(quality.status,"usable")==0) ++outcomes->usable;
+            else if (strcmp(quality.status,"ambiguous")==0) ++outcomes->ambiguous;
+            else ++outcomes->no_signal;
+        }
         memcpy(previous+c*bins,spectrum,bins*sizeof *spectrum);
     }
     report->peak_heap_bytes=heap.peak;
@@ -295,4 +301,9 @@ done:
     }
     cm_free(spectrum); cm_free(previous); cm_free(transform); cm_free(model);
     return result;
+}
+
+int cm_analyze(const char *input,const char *output,const CMOptions *options,
+               CMReport *report,CMError *error) {
+    return cm_analyze_with_outcomes(input,output,options,report,NULL,error);
 }

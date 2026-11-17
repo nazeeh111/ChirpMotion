@@ -72,12 +72,24 @@ int main(int argc,char **argv) {
         }
     }
     if (!input || !*input || !output || !*output) goto invalid;
-    CMError error={{0}}; CMReport report;
-    if (cm_analyze(input,output,&options,&report,&error)!=0) {
+    CMError error={{0}}; CMReport report; CMOutcomeCounts outcomes;
+    if (cm_analyze_with_outcomes(input,output,&options,&report,&outcomes,&error)!=0) {
         fprintf(stderr,"error: %s\n",error.message); return 1;
     }
-    if (printf("Analyzed %llu cycles; start sample %llu; processing heap peak %zu bytes.\n",
-               (unsigned long long)report.cycles,(unsigned long long)report.start_sample,
+    uint64_t sweeps=outcomes.usable+outcomes.ambiguous+outcomes.no_signal;
+    uint64_t withheld=outcomes.ambiguous+outcomes.no_signal;
+    if (printf("Complete: %llu cycle%s, %llu sweep%s.\n"
+               "Quality: %llu usable, %llu ambiguous, %llu no_signal.\n",
+               (unsigned long long)report.cycles,report.cycles==1 ? "" : "s",
+               (unsigned long long)sweeps,sweeps==1 ? "" : "s",
+               (unsigned long long)outcomes.usable,(unsigned long long)outcomes.ambiguous,
+               (unsigned long long)outcomes.no_signal)<0) return 1;
+    if (outcomes.usable==0) {
+        if (fputs("All derived delays and paths withheld; output files are complete.\n",stdout)==EOF) return 1;
+    } else if (printf("Derived delays and paths: %llu available, %llu withheld.\n",
+                      (unsigned long long)outcomes.usable,(unsigned long long)withheld)<0) return 1;
+    if (printf("Start sample %llu; processing heap peak %zu bytes.\n",
+               (unsigned long long)report.start_sample,
                report.peak_heap_bytes)<0 || fflush(stdout)!=0) return 1;
     if (printf("Summary: %s/summary.json\nMeasurements: %s/cycles.csv\n",output,output)<0) return 1;
     if (options.spectra && printf("Spectra: %s/spectra.csv\n",output)<0) return 1;

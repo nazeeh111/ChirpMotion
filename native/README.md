@@ -26,7 +26,7 @@ build/chirpmotion-native --input recording.wav --channel 2 \
 
 Use `--mode up` for repeated upward sweeps. `--start-sample 138` supplies a known one-based timing origin. Without it, the program finds the earliest match within 99% of the global best absolute normalized correlation. Two bounded correlation scans locate that start; a third pass streams measurements. The comparison permits an absolute score tolerance of `1e-12`. Inputs must remain unchanged during processing.
 
-Paths are relative to the working directory. The input must be seekable, and the new output directory's parent must exist. Completion prints the actual result paths. Read `summary.json` for run settings, then `cycles.csv` for each sweep's `quality`; optional `spectra.csv` contains the supporting raw magnitudes.
+Paths are relative to the working directory. The input must be seekable, and the new output directory's parent must exist. Completion prints cycle and sweep counts, the usable/ambiguous/no_signal totals, and how many derived delays and paths are available or withheld, followed by the actual result paths. If every sweep is screened out, it explicitly reports that all derived delays and paths were withheld; the completed run still exits 0. Counts describe output rows, not independent observations. Read `summary.json` for run settings, then `cycles.csv` for each sweep's `quality`; optional `spectra.csv` contains the supporting raw magnitudes.
 
 | Exit | Meaning |
 | --- | --- |
@@ -63,9 +63,12 @@ Owned buffers depend on FFT size and waveform period, not recording length. They
 ```sh
 make CC=clang check
 python3 tests/test_quality.py build/chirpmotion-native
+python3 tests/test_outcomes.py build/chirpmotion-native
 make sanitize
 ```
 
 CI runs GCC and Clang on Ubuntu, including sanitizer and fixed-buffer checks. The MATLAB workflows are verified separately.
+
+The original `CMReport` layout and `cm_analyze` interface are unchanged. The additive `CMOutcomeCounts` / `cm_analyze_with_outcomes` interface exposes completion counts separately; these counts are valid only after return 0. The CLI uses that companion interface. The serialized `chirpmotion.native/v1` files and native version are unchanged.
 
 The native implementation, tests and generated signals are covered by [MIT](LICENSE). A native-only package contains the files listed in [RELEASE-MANIFEST.txt](RELEASE-MANIFEST.txt), excluding inherited scripts, recordings and built binaries.

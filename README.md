@@ -1,20 +1,8 @@
 # ChirpMotion
 
-Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
+Inspect acoustic chirp spectra and screened relative paths with a portable C17 analyzer or the existing MATLAB workflow. The native program streams results without retaining the whole recording.
 
-<picture>
-  <source media="(max-width: 640px)" srcset="docs/presentation/screening-mobile.svg">
-  <img src="docs/presentation/screening.svg" alt="Two generated chirp inputs and their native beat spectra: the single-component peak is usable at 298.828125 Hz; the competing-component spectrum stays available but its delay and path are null.">
-</picture>
-
-**A peak is not yet a path.** The same native analyzer can complete a run and still
-withhold a derived delay. Here, an existing single-component fixture passes its
-screen, while two competing components produce `ambiguous` and `null` delay/path.
-Both runs exit 0 because their output files are complete. These are generated
-signals with a declared timing origin, not a recording of hand motion or a
-calibrated sensor demonstration.
-
-[Reproduce this exact comparison](docs/presentation/README.md) · [Read the native rows](docs/presentation/data/manifest.json) · [Download the complete evidence](docs/presentation/chirp-screening.zip) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
+[Try the native example](#native-analysis-no-matlab-required) · [Analyze a recording](#analyze-your-recording) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
 
 ## Native analysis, no MATLAB required
 
@@ -29,13 +17,9 @@ native/build/chirpmotion-native --version
 
 The demo generates new stereo PCM16 WAVE signals. One contains a known 1 ms delayed chirp, producing a beat near 300 Hz in both sweep directions; another checks automatic alignment after 137 leading samples. No microphone, MATLAB or downloaded recording is needed.
 
-![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-result.svg)
-
-*First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [Historical cycle output](docs/results/native-demo-cycles.csv) · [Historical settings](docs/results/native-demo-summary.json).*
-
 The command prints a fresh `native/build/demo.<suffix>/` directory. Open `delay/summary.json` for settings and sample counts, `delay/cycles.csv` for per-sweep measurements, or `delay/spectra.csv` for the full spectra. Each row reports a peak in Hz, delay in seconds and relative acoustic path in metres under the stated sweep model. That path is not a calibrated distance to an object. The separate `align/summary.json` should report `start_sample: 138` and `discarded_suffix_samples: 19`.
 
-Read the per-sweep `quality` before interpreting a path. The [current generated cycles](docs/results/native-screening-demo-cycles.csv) and [screening settings](docs/results/native-screening-demo-summary.json) preserve that evidence alongside the historical output above:
+Completion reports usable/ambiguous/no_signal totals and how many derived delays and paths are available or withheld. Counts summarize rows, not independent observations. Read the per-sweep `quality` before interpreting a path. The [current generated cycles](docs/results/native-screening-demo-cycles.csv) and [screening settings](docs/results/native-screening-demo-summary.json) preserve that evidence alongside the retained historical output below:
 
 | Quality | What the row reports |
 | --- | --- |
@@ -44,6 +28,27 @@ Read the per-sweep `quality` before interpreting a path. The [current generated 
 | `no_signal` | The spectrum is exactly zero; peak, delay and path are `null`. |
 
 This is uncalibrated screening, not a confidence score or physical-path validation. A completed analysis exits **0** even when every sweep is screened out. Input, analysis or output failures exit **1**; invalid command-line syntax exits **2**. Python 3 is needed only for the additional generated-signal screening tests: `python3 native/tests/test_quality.py native/build/chirpmotion-native`.
+
+<picture>
+  <source media="(max-width: 640px)" srcset="docs/presentation/screening-mobile.svg">
+  <img src="docs/presentation/screening.svg" alt="Two generated chirp inputs and their native beat spectra: the single-component peak is usable at 298.828125 Hz; the competing-component spectrum stays available but its delay and path are null.">
+</picture>
+
+**A peak is not yet a path.** One generated component passes the screen; competing
+components retain their spectra but withhold delay and path. Both runs complete
+with exit 0. These fixtures use a declared timing origin, not captured gestures
+or a calibrated sensor demonstration.
+
+[Reproduce this exact comparison](docs/presentation/README.md) · [Read the native rows](docs/presentation/data/manifest.json) · [Download the complete evidence](docs/presentation/chirp-screening.zip) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
+
+<details>
+<summary>Inspect the original generated-demo plot</summary>
+
+![Generated native demo: upward and downward sweeps each peak at 298.83 Hz for an expected 300 Hz beat; this is synthetic signal analysis, not hand sensing](docs/results/native-demo-result.svg)
+
+*First cycle of the generated native demo, with each spectrum scaled to its own peak. A 300 Hz beat lands at the 298.828125 Hz FFT bin; the bin spacing is 2.9296875 Hz. These are generated signals, not captured gestures or a physical distance test. [Spectra](docs/results/native-demo-spectra.csv) · [Historical cycle output](docs/results/native-demo-cycles.csv) · [Historical settings](docs/results/native-demo-summary.json).*
+
+</details>
 
 ## Analyze your recording
 

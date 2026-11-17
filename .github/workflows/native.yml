@@ -26,9 +26,14 @@ jobs:
         run: make -C native CC=${{ matrix.compiler }} check demo
       - name: Per-sweep screening controls on generated signals
         run: python3 native/tests/test_quality.py native/build/chirpmotion-native
+      - name: Outcome handoff and failure controls
+        run: python3 native/tests/test_outcomes.py native/build/chirpmotion-native
       - name: Address and undefined-behavior checks
         if: matrix.compiler == 'clang'
         run: make -C native CC=clang sanitize
+      - name: Sanitized outcome handoff controls
+        if: matrix.compiler == 'clang'
+        run: python3 native/tests/test_outcomes.py native/build-sanitize/chirpmotion-native
       - name: Fixed-buffer memory acceptance
         if: matrix.compiler == 'gcc'
         working-directory: native
