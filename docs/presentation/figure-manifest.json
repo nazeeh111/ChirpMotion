@@ -1,0 +1,30 @@
+{
+  "source_commit": "db81f1af36f09498c8b3eaeb4368e93347420225",
+  "input_manifest_sha256": "8049fc9c3200ab4b970431c926ddfd5f065590a7d12b22c80bcab265c9eb8b15",
+  "encoded_samples_per_input": 961,
+  "encoded_spectrum_vertices_per_case": 513,
+  "transformations": [
+    "PCM16LE decoded as raw signed counts",
+    "time sample index divided by 48000 and multiplied by 1000",
+    "all stored frequency/magnitude bins plotted without normalization, smoothing, filtering or simplification"
+  ],
+  "uncertainty": "None estimated; heuristic screening is not a probability or physical calibration.",
+  "figures": {
+    "screening-mobile.svg": {
+      "bytes": 112666,
+      "sha256": "46aba4a1a427b00579b24f73258cc61730a8ad6c83b7bbc5f939abb9de3a8f6e"
+    },
+    "screening.png": {
+      "bytes": 181970,
+      "sha256": "eabdace00a4b65117d86236383b6a1edd6054640e55df05192586ccaa6829aac"
+    },
+    "screening.svg": {
+      "bytes": 117203,
+      "sha256": "a969430b24e48d873f65fbc87dd46921bd385e680d66b9228a1f1fb75db6a17a"
+    },
+    "screening-mobile.png": {
+      "bytes": 260231,
+      "sha256": "c97da7644ab86dee882ed4d82043be002952f5b494f427e5a48b904059fa7a09"
+    }
+  }
+}
