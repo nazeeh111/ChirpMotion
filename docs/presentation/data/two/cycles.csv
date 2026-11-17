@@ -1,0 +1,2 @@
+cycle,sweep,start_seconds,peak_hz,relative_delay_seconds,relative_path_meters,relative_spectral_change,quality,peak_magnitude,competing_magnitude,noise_rms_magnitude,peak_to_noise_rms,resolved_competing_magnitude,resolved_valley_magnitude
+0,0,0,849.609375,null,null,null,ambiguous,539986.37788560276,539879.94996983488,154005.70854303322,3.506275078983299,539879.94996983488,6.5155227124979822

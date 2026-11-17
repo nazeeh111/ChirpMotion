@@ -2,6 +2,20 @@
 
 Inspect recorded acoustic chirps with a portable C17 command-line analyzer or the existing MATLAB workflow. The native program streams cycle measurements and optional spectra without retaining the whole recording.
 
+<picture>
+  <source media="(max-width: 640px)" srcset="docs/presentation/screening-mobile.svg">
+  <img src="docs/presentation/screening.svg" alt="Two generated chirp inputs and their native beat spectra: the single-component peak is usable at 298.828125 Hz; the competing-component spectrum stays available but its delay and path are null.">
+</picture>
+
+**A peak is not yet a path.** The same native analyzer can complete a run and still
+withhold a derived delay. Here, an existing single-component fixture passes its
+screen, while two competing components produce `ambiguous` and `null` delay/path.
+Both runs exit 0 because their output files are complete. These are generated
+signals with a declared timing origin, not a recording of hand motion or a
+calibrated sensor demonstration.
+
+[Reproduce this exact comparison](docs/presentation/README.md) · [Read the native rows](docs/presentation/data/manifest.json) · [Download the complete evidence](docs/presentation/chirp-screening.zip) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
+
 ## Native analysis, no MATLAB required
 
 On macOS or Linux with a C compiler and make. Current native source identifies as `0.1.1-dev.0`; retained recordings, plots and earlier source packages keep their original provenance.

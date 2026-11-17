@@ -1,0 +1,80 @@
+{
+  "schema": "chirpmotion-presentation-evidence-v1",
+  "source_commit": "db81f1af36f09498c8b3eaeb4368e93347420225",
+  "source_tree": "1193e9fac8e7e51afe0e4d7dafed1f1311b2db85",
+  "source_external_url": "https://github.com/nazeeh111/ChirpMotion/tree/db81f1af36f09498c8b3eaeb4368e93347420225",
+  "fixture_source": "native/tests/test_quality.py fixture(single), fixture(two) in the external complete source checkout",
+  "sample_rate_hz": 48000,
+  "samples_per_case": 961,
+  "mode": "up",
+  "known_start_sample": 1,
+  "rows": {
+    "single": {
+      "cycle": "0",
+      "sweep": "0",
+      "start_seconds": "0",
+      "peak_hz": "298.828125",
+      "relative_delay_seconds": "0.00099609375000000002",
+      "relative_path_meters": "0.33867187500000001",
+      "relative_spectral_change": "null",
+      "quality": "usable",
+      "peak_magnitude": "1079763.5429165647",
+      "competing_magnitude": "4965.7169531325981",
+      "noise_rms_magnitude": "993.47565571687278",
+      "peak_to_noise_rms": "1086.8545562270756",
+      "resolved_competing_magnitude": "0",
+      "resolved_valley_magnitude": "null"
+    },
+    "two": {
+      "cycle": "0",
+      "sweep": "0",
+      "start_seconds": "0",
+      "peak_hz": "849.609375",
+      "relative_delay_seconds": "null",
+      "relative_path_meters": "null",
+      "relative_spectral_change": "null",
+      "quality": "ambiguous",
+      "peak_magnitude": "539986.37788560276",
+      "competing_magnitude": "539879.94996983488",
+      "noise_rms_magnitude": "154005.70854303322",
+      "peak_to_noise_rms": "3.506275078983299",
+      "resolved_competing_magnitude": "539879.94996983488",
+      "resolved_valley_magnitude": "6.5155227124979822"
+    }
+  },
+  "files": {
+    "single/summary.json": {
+      "bytes": 987,
+      "sha256": "8c693773c5a660139303a4d22048cb40d52cb756c2629842c5c4d26cde922c7d"
+    },
+    "single/input.pcm": {
+      "bytes": 1922,
+      "sha256": "49be125b887dd0475e4493e7b102f37ee299f5820d180c5e43be4e209d54ceaa"
+    },
+    "single/cycles.csv": {
+      "bytes": 394,
+      "sha256": "19824a55d586a1dd55da0fb81358f2a34ab11b710588b5023ffe4bbc39e1ce92"
+    },
+    "single/spectra.csv": {
+      "bytes": 17555,
+      "sha256": "2d1909363e771e444887f7be9075d142b5a1576586af99c5a6aef2e2a56f32c1"
+    },
+    "two/summary.json": {
+      "bytes": 987,
+      "sha256": "8c693773c5a660139303a4d22048cb40d52cb756c2629842c5c4d26cde922c7d"
+    },
+    "two/input.pcm": {
+      "bytes": 1922,
+      "sha256": "e89d30763e455b35f9f19ca75bffc637383b599a927e4efc85aba804d7f9bec2"
+    },
+    "two/cycles.csv": {
+      "bytes": 394,
+      "sha256": "8db32f61ce7194f6cae5a68e75bbf8c2a71c1ad61f22e9a14d752e4b645ad3c0"
+    },
+    "two/spectra.csv": {
+      "bytes": 17550,
+      "sha256": "2b1754722ae56dc5d2eed1f236ab6ccba611234da60296983b0090fbbd4ee5f5"
+    }
+  },
+  "limits": "Two generated fixtures; heuristic screening and modeled relative path, not physical calibration or generic accuracy."
+}
