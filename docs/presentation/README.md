@@ -100,6 +100,16 @@ are included. Plot bytes can vary by renderer/runtime; scientific reproduction
 means checking the preserved inputs and numeric outputs, not assuming identical
 PNG bytes across versions.
 
+The README uses an additional [narrow phone SVG](screening-phone.svg), with a
+[PNG counterpart](screening-phone.png), from the same preserved arrays and native
+rows. Its 254-unit canvas uses at least 13-unit text: 13px when displayed at 254px
+wide, or about 12.18px at 238px. Actual display width and font fallback still matter.
+It retains every sample and bin, the same shared limits and unnormalized magnitude,
+and explicit usable/ambiguous and null-path outcomes. Reproduce it separately with
+`python docs/presentation/render-phone.py`; the [phone manifest](screening-phone-manifest.json)
+records input/renderer/export hashes, runtime, units and text bounds. The original
+wide/portrait files, renderer, HTML view and evidence ZIP remain available unchanged.
+
 The implementation divides beat frequency by a 300000 Hz/s slope, then multiplies
 by an assumed 340 m/s sound speed. It reports relative **total acoustic path**.
 It is not calibrated object distance; transducer geometry, multipath, Doppler,

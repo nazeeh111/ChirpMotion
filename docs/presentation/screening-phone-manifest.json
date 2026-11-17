@@ -1,0 +1,511 @@
+{
+  "source_commit": "db81f1af36f09498c8b3eaeb4368e93347420225",
+  "input_manifest_sha256": "8049fc9c3200ab4b970431c926ddfd5f065590a7d12b22c80bcab265c9eb8b15",
+  "renderer_sha256": "4366191846761937e599ca6558c33a2e642e60f023738bc42db907362f7c400c",
+  "runtime": {
+    "python": "3.12.13",
+    "numpy": "2.5.5",
+    "matplotlib": "3.11.2",
+    "backend": "Agg"
+  },
+  "logical_canvas": {
+    "width": 254,
+    "height": 1160
+  },
+  "minimum_font_units": 13.0,
+  "effective_minimum_font_css_px": {
+    "238": 12.181102362204724,
+    "254": 13.0,
+    "324": 16.58267716535433
+  },
+  "encoded_samples_per_input": 961,
+  "encoded_spectrum_vertices_per_case": 513,
+  "transformations": [
+    "PCM16LE decoded as raw signed counts",
+    "time is sample index / 48000 * 1000 in milliseconds",
+    "all stored bins plotted without normalization, smoothing, filtering or path simplification"
+  ],
+  "uncertainty": "None estimated; two generated controls, not physical observations or confidence.",
+  "text_boxes": [
+    {
+      "text": "Time (ms)",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        117.44921875,
+        831.8769531250001,
+        182.55078125,
+        845.0000000000001
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        59.75,
+        849.0000000000001,
+        68.25,
+        862.0000000000001
+      ]
+    },
+    {
+      "text": "5",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        102.75,
+        849.0000000000001,
+        111.25,
+        862.0000000000001
+      ]
+    },
+    {
+      "text": "10",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        141.5,
+        849.0000000000001,
+        158.5,
+        862.0000000000001
+      ]
+    },
+    {
+      "text": "15",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        184.5,
+        849.0000000000001,
+        201.5,
+        862.0000000000001
+      ]
+    },
+    {
+      "text": "20",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        227.5,
+        849.0000000000001,
+        244.5,
+        862.0000000000001
+      ]
+    },
+    {
+      "text": "\u221210000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        4.5,
+        873.5538611778848,
+        58.0,
+        886.5538611778848
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        49.5,
+        918.9384765625001,
+        58.0,
+        931.9384765625001
+      ]
+    },
+    {
+      "text": "10000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        15.5,
+        964.3230919471155,
+        58.0,
+        977.3230919471155
+      ]
+    },
+    {
+      "text": "Beat frequency (Hz)",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        85.14453125,
+        588.8769531250001,
+        214.85546875,
+        602.0000000000001
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        59.75,
+        606.0000000000001,
+        68.25,
+        619.0000000000001
+      ]
+    },
+    {
+      "text": "500",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        108.58333333333334,
+        606.0000000000001,
+        134.08333333333334,
+        619.0000000000001
+      ]
+    },
+    {
+      "text": "1000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        161.66666666666669,
+        606.0000000000001,
+        195.66666666666669,
+        619.0000000000001
+      ]
+    },
+    {
+      "text": "1500",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        219.0,
+        606.0000000000001,
+        253.0,
+        619.0000000000001
+      ]
+    },
+    {
+      "text": "1e6",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        64.0,
+        742.8769531250001,
+        89.0,
+        755.8769531250001
+      ]
+    },
+    {
+      "text": "0.0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        616.9384765625001,
+        58.0,
+        629.9384765625001
+      ]
+    },
+    {
+      "text": "0.6",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        675.9384765625001,
+        58.0,
+        688.9384765625001
+      ]
+    },
+    {
+      "text": "1.2",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        734.9384765625001,
+        58.0,
+        747.9384765625001
+      ]
+    },
+    {
+      "text": "Time (ms)",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        117.44921875,
+        332.876953125,
+        182.55078125,
+        346.0
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        59.75,
+        350.0,
+        68.25,
+        363.0
+      ]
+    },
+    {
+      "text": "5",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        102.75,
+        350.0,
+        111.25,
+        363.0
+      ]
+    },
+    {
+      "text": "10",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        141.5,
+        350.0,
+        158.5,
+        363.0
+      ]
+    },
+    {
+      "text": "15",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        184.5,
+        350.0,
+        201.5,
+        363.0
+      ]
+    },
+    {
+      "text": "20",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        227.5,
+        350.0,
+        244.5,
+        363.0
+      ]
+    },
+    {
+      "text": "\u221210000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        4.5,
+        374.55386117788464,
+        58.0,
+        387.55386117788464
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        49.5,
+        419.9384765625,
+        58.0,
+        432.9384765625
+      ]
+    },
+    {
+      "text": "10000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        15.5,
+        465.32309194711536,
+        58.0,
+        478.32309194711536
+      ]
+    },
+    {
+      "text": "Beat frequency (Hz)",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        85.14453125,
+        89.876953125,
+        214.85546875,
+        103.0
+      ]
+    },
+    {
+      "text": "0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        59.75,
+        107.0,
+        68.25,
+        120.0
+      ]
+    },
+    {
+      "text": "500",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        108.58333333333334,
+        107.0,
+        134.08333333333334,
+        120.0
+      ]
+    },
+    {
+      "text": "1000",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        161.66666666666669,
+        107.0,
+        195.66666666666669,
+        120.0
+      ]
+    },
+    {
+      "text": "1500",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        219.0,
+        107.0,
+        253.0,
+        120.0
+      ]
+    },
+    {
+      "text": "1e6",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        64.0,
+        243.87695312499997,
+        89.0,
+        256.876953125
+      ]
+    },
+    {
+      "text": "0.0",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        117.9384765625,
+        58.0,
+        130.9384765625
+      ]
+    },
+    {
+      "text": "0.6",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        176.9384765625,
+        58.0,
+        189.9384765625
+      ]
+    },
+    {
+      "text": "1.2",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        37.0,
+        235.9384765625,
+        58.0,
+        248.9384765625
+      ]
+    },
+    {
+      "text": "A peak is not\nyet a path.",
+      "font_units": 17.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        1102.9,
+        139.0,
+        1142.0
+      ]
+    },
+    {
+      "text": "Generated native PCM controls.\nNo physical calibration.",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        1062.1,
+        218.7109375,
+        1092.0
+      ]
+    },
+    {
+      "text": "One delayed component",
+      "font_units": 15.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        1018.75,
+        217.0390625,
+        1036.0
+      ]
+    },
+    {
+      "text": "PCM int16 units",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        994.0499999999998,
+        115.0,
+        1008.9999999999999
+      ]
+    },
+    {
+      "text": "usable\n298.828125 Hz",
+      "font_units": 14.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        787.8,
+        129.5,
+        820.0
+      ]
+    },
+    {
+      "text": "Unnormalized magnitude",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        758.0500000000001,
+        177.7734375,
+        773.0000000000001
+      ]
+    },
+    {
+      "text": "Two competing\ncomponents",
+      "font_units": 15.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        520.5,
+        140.3515625,
+        555.0
+      ]
+    },
+    {
+      "text": "PCM int16 units",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        495.05000000000007,
+        115.0,
+        510.00000000000006
+      ]
+    },
+    {
+      "text": "ambiguous\ndelay/path: null",
+      "font_units": 14.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        288.79999999999995,
+        138.0703125,
+        320.99999999999994
+      ]
+    },
+    {
+      "text": "Unnormalized magnitude",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        259.04999999999995,
+        177.7734375,
+        273.99999999999994
+      ]
+    },
+    {
+      "text": "All 961 samples and 513 bins\nper case; no rescaling or smoothing.\nHeuristic screen, not confidence.",
+      "font_units": 13.0,
+      "bounds_logical_bottom_origin": [
+        14.0,
+        15.149999999999991,
+        251.2109375,
+        59.99999999999999
+      ]
+    }
+  ],
+  "figures": {
+    "screening-phone.svg": {
+      "bytes": 104707,
+      "sha256": "964a4d9fc8f9965d23bd452daf7610947e65363dac5e94a75061ac95c5b4c6c3"
+    },
+    "screening-phone.png": {
+      "bytes": 147103,
+      "sha256": "df047be475b4edd9e09e4b3826acea1e1c5c0a6a2819143b4ec706e1a134c002"
+    }
+  }
+}

@@ -30,7 +30,7 @@ Completion reports usable/ambiguous/no_signal totals and how many derived delays
 This is uncalibrated screening, not a confidence score or physical-path validation. A completed analysis exits **0** even when every sweep is screened out. Input, analysis or output failures exit **1**; invalid command-line syntax exits **2**. Python 3 is needed only for the additional generated-signal screening tests: `python3 native/tests/test_quality.py native/build/chirpmotion-native`.
 
 <picture>
-  <source media="(max-width: 640px)" srcset="docs/presentation/screening-mobile.svg">
+  <source media="(max-width: 640px)" srcset="docs/presentation/screening-phone.svg">
   <img src="docs/presentation/screening.svg" alt="Two generated chirp inputs and their native beat spectra: the single-component peak is usable at 298.828125 Hz; the competing-component spectrum stays available but its delay and path are null.">
 </picture>
 
