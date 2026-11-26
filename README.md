@@ -39,7 +39,7 @@ components retain their spectra but withhold delay and path. Both runs complete
 with exit 0. These fixtures use a declared timing origin, not captured gestures
 or a calibrated sensor demonstration.
 
-[Reproduce this exact comparison](docs/presentation/README.md) · [Read the native rows](docs/presentation/data/manifest.json) · [Download the complete evidence](docs/presentation/chirp-screening.zip) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
+[Reproduce this exact comparison](docs/presentation/README.md) · [Read the native rows](docs/presentation/data/manifest.json) · [Download the complete evidence](https://raw.githubusercontent.com/nazeeh111/ChirpMotion/f55f6e459d66029ed240ab9c0d9e455b45084ba5/docs/presentation/chirp-screening.zip) · [Use MATLAB](#offline-fmcw-analysis-base-matlab)
 
 <details>
 <summary>Inspect the original generated-demo plot</summary>
